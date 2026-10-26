@@ -1,0 +1,44 @@
+<h1>{{checklist.name}}</h1>
+{% if actions %}
+    <ul>
+        {% for action in actions %}
+        <li><a href="{% url 'checklist:action_detail' action.id %}" >{{action.name}}</a>
+
+            <form action="{% url 'checklist:toggle_action' action.id %}" method="post">
+            {% csrf_token %}
+                <input type="submit" value="{{ action.status|yesno:'V,X' }}">
+            </form>
+            <form action="{% url 'checklist:up_action' action.id %}" method="post">
+            {% csrf_token %}
+                <input type="submit" value="up">
+            </form>
+            <form action="{% url 'checklist:down_action' action.id %}" method="post">
+            {% csrf_token %}
+                <input type="submit" value="down">
+            </form>
+            <form action="{% url 'checklist:delete_action' action.id %}" method="post">
+            {% csrf_token %}
+                <input type="submit" value="del">
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucune action dans la checklist.</p>
+{% endif %}
+
+<form method="get" action="{% url 'checklist:new_action' checklist.id %}">
+    <button type="submit">Ajouter action</button>
+</form>
+
+<form method="get" action="{% url 'checklist:confirm_delete_checklist' checklist.id %}">
+    <button type="submit">Supprimer checklist</button>
+</form>
+
+<form method="get" action="{% url 'checklist:update_checklist' checklist.id %}">
+    <button type="submit">Renommer checklist</button>
+</form>
+
+<form method="get" action="{% url 'checklist:index' %}">
+    <button type="submit">Retour</button>
+</form>

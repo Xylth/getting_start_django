@@ -1,0 +1,10 @@
+<h1>{{action.name}}</h1>
+<p>{{action.comment}}</p>
+
+<form method="get" action="{% url 'checklist:update_action' action.id %}">
+    <button type="submit">Modifier action</button>
+</form>
+
+<form method="get" action="{% url 'checklist:checklist_detail' action.checklist_id %}">
+    <button type="submit">Retour</button>
+</form>

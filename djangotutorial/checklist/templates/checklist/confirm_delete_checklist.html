@@ -1,0 +1,10 @@
+<h1>Confirmez la suppression de la checklist</h1>
+<p>{{checklist.name}}</p>
+<form action="{% url 'checklist:delete_checklist' checklist.id %}" method="post">
+{% csrf_token %}
+<input type="submit" value="Oui">
+</form>
+
+<form method="get" action="{% url 'checklist:checklist_detail' checklist.id %}">
+    <button type="submit">Non</button>
+</form>

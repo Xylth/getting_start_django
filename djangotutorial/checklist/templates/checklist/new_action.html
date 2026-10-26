@@ -1,0 +1,10 @@
+<h1>Ajouter une action à la checklist {{checklist.name}}</h1>
+<form  method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Créer l'action">
+</form>
+
+<form method="get" action="{% url 'checklist:checklist_detail' checklist.id %}">
+    <button type="submit">Retour</button>
+</form>

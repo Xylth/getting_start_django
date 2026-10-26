@@ -1,0 +1,15 @@
+<h1>Liste des checklists :</h1>
+{% if checklists %}
+    <ul>
+        {% for checklist in checklists %}
+        <li><a href="{% url 'checklist:checklist_detail' checklist.id%}">{{checklist.name}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucune checklist en cours.</p>
+{% endif %}
+
+<form method="get" action="{% url 'checklist:new_checklist' %}">
+    <button type="submit">Ajouter checklist</button>
+</form>

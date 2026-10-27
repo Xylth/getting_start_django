@@ -1,0 +1,8 @@
+<button type="submit"
+        {% if form_id %}
+                form="{{ form_id }}"
+        {% endif %}
+        class="inline-flex items-center gap-3 text-white font-semibold text-lg px-6 py-3 rounded-xl transition {{colors}}">
+        {% include "checklist/partials/icons/_"|add:icon|add:".html" %}
+        {{label}}
+</button>

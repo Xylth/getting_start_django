@@ -1,10 +1,34 @@
-<h1>{{action.name}}</h1>
-<p>{{action.comment}}</p>
+{% extends 'checklist/base.html' %}
+{% load widget_tweaks %}
 
-<form method="get" action="{% url 'checklist:update_action' action.id %}">
-    <button type="submit">Modifier action</button>
-</form>
+{% block goal %}
+    VISUALISER
+{% endblock %}
 
-<form method="get" action="{% url 'checklist:checklist_detail' action.checklist_id %}">
-    <button type="submit">Retour</button>
-</form>
+{% block target %}
+    Elément {{action.name}}
+{% endblock %}
+
+{% block info %}
+    Element de la checklist {{action.checklist.name}}
+{% endblock %}
+
+
+{% block content %}
+    <div class="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
+        {% for field in form %}
+            {% include 'checklist/partials/_form_field.html' with field=field|attr:"disabled" %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block menu %}
+
+    <form method="get" action="{% url 'checklist:update_action' action.id %}">
+        {%include "checklist/partials/buttons/menu_buttons/_edit.html"%}
+    </form>
+
+    <form method="get" action="{% url 'checklist:checklist_detail' action.checklist_id %}">
+        {%include "checklist/partials/buttons/menu_buttons/_back.html"%}
+    </form>
+{% endblock %}

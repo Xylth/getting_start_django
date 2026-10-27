@@ -1,10 +1,38 @@
-<h1>Confirmez la suppression de la checklist</h1>
-<p>{{checklist.name}}</p>
-<form action="{% url 'checklist:delete_checklist' checklist.id %}" method="post">
-{% csrf_token %}
-<input type="submit" value="Oui">
-</form>
+{% extends 'checklist/base.html' %}
 
-<form method="get" action="{% url 'checklist:checklist_detail' checklist.id %}">
-    <button type="submit">Non</button>
-</form>
+{% block header%}
+     Supprimer la checklist {{checklist.name}}?
+{% endblock %}
+
+{% block goal %}
+    SUPPRIMER
+{% endblock %}
+
+{% block target %}
+    Liste {{checklist.name}}
+{% endblock %}
+
+{% block info %}
+    {{ checklist.nb_done }} / {{ checklist.nb_actions }} tâche{% if checklist.nb_actions > 1 %}s{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="space-y-3">
+        {% for action in actions %}
+            {% include 'checklist/partials/_element_card.html' with disabled="True" %}
+        {% empty %}
+            {% include 'checklist/partials/_empty.html' with icon="checked" issue="Aucun élément dans la liste" tip="Ajoutez des éléments pour commencer"  %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block menu %}
+    <form action="{% url 'checklist:delete_checklist' checklist.id %}" method="post">
+    {% csrf_token %}
+        {%include "checklist/partials/buttons/menu_buttons/_validate.html"%}
+    </form>
+
+    <form method="get" action="{% url 'checklist:checklist_detail' checklist.id %}">
+        {%include "checklist/partials/buttons/menu_buttons/_cancel.html"%}
+    </form>
+{% endblock %}

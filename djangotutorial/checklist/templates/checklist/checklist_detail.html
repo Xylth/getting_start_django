@@ -1,44 +1,43 @@
-<h1>{{checklist.name}}</h1>
-{% if actions %}
-    <ul>
+{% extends 'checklist/base.html' %}
+
+{% block goal %}
+    VISUALISER
+{% endblock %}
+
+{% block target %}
+    Liste {{checklist.name}}
+{% endblock %}
+
+{% block info %}
+    {{ checklist.nb_done }} / {{ checklist.nb_actions }} tâche{% if checklist.nb_actions > 1 %}s{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="space-y-3">
         {% for action in actions %}
-        <li><a href="{% url 'checklist:action_detail' action.id %}" >{{action.name}}</a>
-
-            <form action="{% url 'checklist:toggle_action' action.id %}" method="post">
-            {% csrf_token %}
-                <input type="submit" value="{{ action.status|yesno:'V,X' }}">
-            </form>
-            <form action="{% url 'checklist:up_action' action.id %}" method="post">
-            {% csrf_token %}
-                <input type="submit" value="up">
-            </form>
-            <form action="{% url 'checklist:down_action' action.id %}" method="post">
-            {% csrf_token %}
-                <input type="submit" value="down">
-            </form>
-            <form action="{% url 'checklist:delete_action' action.id %}" method="post">
-            {% csrf_token %}
-                <input type="submit" value="del">
-            </form>
-        </li>
+            {% include 'checklist/partials/_element_card.html' %}
+        {% empty %}
+            {% include 'checklist/partials/_empty.html' with icon="checked" issue="Aucun élément dans la liste" tip="Ajoutez des éléments pour commencer"  %}
         {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune action dans la checklist.</p>
-{% endif %}
+    </div>
 
-<form method="get" action="{% url 'checklist:new_action' checklist.id %}">
-    <button type="submit">Ajouter action</button>
-</form>
+{% endblock %}
 
-<form method="get" action="{% url 'checklist:confirm_delete_checklist' checklist.id %}">
-    <button type="submit">Supprimer checklist</button>
-</form>
+{% block menu %}
+    <form method="get" action="{% url 'checklist:new_action' checklist.id %}">
+        {%include "checklist/partials/buttons/menu_buttons/_add.html"%}
+    </form>
 
-<form method="get" action="{% url 'checklist:update_checklist' checklist.id %}">
-    <button type="submit">Renommer checklist</button>
-</form>
+    <form method="get" action="{% url 'checklist:confirm_delete_checklist' checklist.id %}">
+        {%include "checklist/partials/buttons/menu_buttons/_delete.html"%}
+    </form>
 
-<form method="get" action="{% url 'checklist:index' %}">
-    <button type="submit">Retour</button>
-</form>
+    <form method="get" action="{% url 'checklist:update_checklist' checklist.id %}">
+        {%include "checklist/partials/buttons/menu_buttons/_edit.html"%}
+    </form>
+
+    <form method="get" action="{% url 'checklist:index' %}">
+        {%include "checklist/partials/buttons/menu_buttons/_back.html"%}
+    </form>
+
+{% endblock %}

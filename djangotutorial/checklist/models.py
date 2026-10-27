@@ -8,7 +8,7 @@ class Checklist(models.Model):
         return self.name
 
 class Action(models.Model):
-    checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE)
+    checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE, related_name="actions")
     name = models.CharField(max_length=200)
     comment = models.CharField(max_length=600, default="", blank=True)
     status = models.BooleanField(default=False)

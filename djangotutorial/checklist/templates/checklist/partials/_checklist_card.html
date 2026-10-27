@@ -1,0 +1,29 @@
+<a href="{% url 'checklist:checklist_detail' checklist.id %}"
+   class="flex items-center gap-4 bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition">
+
+    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>
+        </svg>
+    </div>
+
+    <div class="flex-1 min-w-0">
+        <h2 class="text-lg font-semibold text-gray-900 truncate">{{ checklist.name }}</h2>
+        <div class="flex items-center gap-4 mt-2">
+            <div class="flex-1 max-w-xs h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-700 rounded-full"
+                     style="width: {% widthratio checklist.nb_done checklist.nb_actions 100 %}%"></div>
+            </div>
+            <span class="text-sm text-gray-500 whitespace-nowrap">
+                {{ checklist.nb_done }} / {{ checklist.nb_actions }} tâche{% if checklist.nb_actions > 1 %}s{% endif %}
+            </span>
+        </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 shrink-0" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+    </svg>
+</a>

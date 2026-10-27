@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+
+<div>
+    <label for="{{ field.id_for_label }}" class="block font-semibold text-gray-900 mb-2">
+        {{ field.label }}
+    </label>
+
+    {% if field.widget_type == "textarea" %}
+        {% render_field field class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent resize-none" %}
+    {% elif field.widget_type == "checkbox" %}
+        {% render_field field class="w-5 h-5 rounded border-gray-300 accent-blue-700" %}
+    {% else %}
+        {% render_field field class="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %}
+    {% endif %}
+
+    {% for error in field.errors %}
+        <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+    {% endfor %}
+</div>

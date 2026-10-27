@@ -1,15 +1,34 @@
-<h1>Liste des checklists :</h1>
-{% if checklists %}
-    <ul>
-        {% for checklist in checklists %}
-        <li><a href="{% url 'checklist:checklist_detail' checklist.id%}">{{checklist.name}}</a>
-        </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune checklist en cours.</p>
-{% endif %}
+{% extends 'checklist/base.html' %}
 
-<form method="get" action="{% url 'checklist:new_checklist' %}">
-    <button type="submit">Ajouter checklist</button>
-</form>
+{% block goal %}
+    VISUALISER
+{% endblock %}
+
+{% block target %}
+    Toutes les listes
+{% endblock %}
+
+{% block info %}
+    {{ checklists|length }} liste{% if checklists|length > 1 %}s{% endif %} en cours
+{% endblock %}
+
+{% block content %}
+
+    <div class="space-y-3">
+        {% for checklist in checklists %}
+            {% include 'checklist/partials/_checklist_card.html' %}
+        {% empty %}
+            {% include 'checklist/partials/_empty.html' with icon="list" issue="Aucune liste en cours" tip="Ajoutez des listes pour commencer"  %}
+        {% endfor %}
+    </div>
+
+    <div class="w-full flex justify-evenly items-center my-6">
+
+    </div>
+{% endblock %}
+
+{% block menu %}
+    <form method="get" action="{% url 'checklist:new_checklist' %}">
+        {%include "checklist/partials/buttons/menu_buttons/_add.html"%}
+    </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+services:
+  
+services:
+  web:
+    build: .
+    container_name: django-app
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    networks: [npm_net]
+
+networks:
+  npm_net:
+    external: true
+    name: NOM_DU_RESEAU_NPM

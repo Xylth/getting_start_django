@@ -1,6 +1,4 @@
 services:
-  
-services:
   web:
     build: .
     container_name: django-app

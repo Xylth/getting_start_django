@@ -1,4 +1,4 @@
-{% extends 'checklist/base.html' %}
+{% extends 'base.html' %}
 {% load widget_tweaks %}
 
 {% block goal %}
@@ -17,7 +17,7 @@
 {% block content %}
     <div class="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
         {% for field in form %}
-            {% include 'checklist/partials/_form_field.html' with field=field|attr:"disabled" %}
+            {% include 'partials/_form_field.html' with field=field|attr:"disabled" %}
         {% endfor %}
     </div>
 {% endblock %}

@@ -1,8 +1,19 @@
 from django.db import models
-
+from django.conf import settings
 
 class Checklist(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="checklists",
+        editable=False,
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["user", "name"], name="unique_checklist_per_user")
+        ]
 
     def __str__(self):
         return self.name

@@ -7,6 +7,8 @@ services:
     volumes:
       - ./data:/app/data
     networks: [npm_net]
+    ports:
+      - "8000:8000"
 
 networks:
   npm_net:

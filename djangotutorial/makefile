@@ -3,7 +3,7 @@
 up:
 	@test -f .env && echo ".env existe déjà" || ( \
 		cp .env.example .env && \
-		echo "SECRET_KEY=$$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')" >> .env && \
+		echo "DJANGO_SECRET_KEY=$$(python3 -c 'import secrets; print(secrets.token_urlsafe(50))')" >> .env && \
 		echo ".env créé avec une nouvelle SECRET_KEY" )
 	@mkdir -p data
 	docker compose up -d --build

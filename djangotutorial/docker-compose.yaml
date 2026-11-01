@@ -6,11 +6,5 @@ services:
     restart: unless-stopped
     volumes:
       - ./data:/app/data
-    networks: [npm_net]
     ports:
       - "8000:8000"
-
-networks:
-  npm_net:
-    external: true
-    name: NOM_DU_RESEAU_NPM

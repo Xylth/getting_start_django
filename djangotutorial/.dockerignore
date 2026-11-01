@@ -1,4 +1,4 @@
-.env
+.env.example
 .env.local
 db.sqlite3
 data/

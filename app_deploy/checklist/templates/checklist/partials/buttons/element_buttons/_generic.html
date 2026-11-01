@@ -1,0 +1,5 @@
+<button type="submit"
+        {% if disabled %}disabled{% endif %}
+        class="flex items-center justify-center w-12 h-12 rounded-xl shrink-0 transition {{ colors }} {{ border }} disabled:opacity-30 disabled:cursor-not-allowed">
+    {% include "checklist/partials/icons/_"|add:icon|add:".html" %}
+</button>

@@ -1,0 +1,46 @@
+<div class="flex items-center gap-4 bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition">
+
+    <form action="{% url 'checklist:toggle_action' action.id %}" method="post">
+        {% csrf_token %}
+        {%include "checklist/partials/buttons/element_buttons/_toggle.html"%}
+    </form>
+
+    {% if disabled %}
+        <div class="flex-1 min-w-0 self-stretch flex items-center">
+            <h2 class="text-lg font-semibold truncate
+                    {% if action.status %}
+                        text-gray-400 line-through
+                    {% else %}
+                        text-gray-900
+                    {% endif %}">
+                {{ action.name }}
+            </h2>
+        </div>
+    {% else %}
+        <a href="{% url 'checklist:action_detail' action.id %}" class="flex-1 min-w-0 self-stretch flex items-center">
+            <h2 class="text-lg font-semibold truncate
+                    {% if action.status %}
+                        text-gray-400 line-through
+                    {% else %}
+                        text-gray-900
+                    {% endif %}">
+                {{ action.name }}
+            </h2>
+        </a>
+    {% endif %}
+
+    <div class="flex gap-1">
+        <form action="{% url 'checklist:up_action' action.id %}" method="post">
+            {% csrf_token %}
+            {%include "checklist/partials/buttons/element_buttons/_up.html" with disabled=forloop.first%}
+        </form>
+        <form action="{% url 'checklist:down_action' action.id %}" method="post">
+            {% csrf_token %}
+            {%include "checklist/partials/buttons/element_buttons/_down.html" with disabled=forloop.last%}
+        </form>
+        <form action="{% url 'checklist:delete_action' action.id %}" method="post">
+            {% csrf_token %}
+            {%include "checklist/partials/buttons/element_buttons/_delete.html"%}
+        </form>
+    </div>
+</div>

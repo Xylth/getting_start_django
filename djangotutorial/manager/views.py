@@ -1,22 +1,24 @@
 from email.policy import default
 from traceback import print_tb
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Exists, OuterRef
+from django.views.decorators.http import require_POST
 
 from .forms import LoginForm, RegisterForm, ProfileForm, PasswordUpdateForm, StatusProfileForm
-from .models import Application
-
-
+from .models import Application, UserApplication
 
 
 @login_required
 def homepage(request):
-    apps = Application.objects.filter(user=request.user)
-
-    return render(request, "manager/homepage.html", {"apps":apps})
+    apps = Application.objects.filter(
+        userapplication__user=request.user,
+        userapplication__status=True,
+    )
+    return render(request, "manager/homepage.html", {"apps": apps})
 
 def login_user(request):
     default_form = LoginForm()
@@ -82,3 +84,23 @@ def profile(request):
         "password_update_form": password_update_form,
         "status_profile_form": status_profile_form,
     })
+
+
+@login_required
+def app_conf(request):
+    active_for_user = UserApplication.objects.filter(
+        application=OuterRef("pk"),
+        user=request.user,
+        status=True,
+    )
+    apps = Application.objects.annotate(activate=Exists(active_for_user))
+    return render(request, "manager/app_conf.html", {"apps": apps})
+
+@login_required
+@require_POST
+def toggle_app(request, app_id):
+    app = get_object_or_404(Application, pk=app_id)
+    link, _ = UserApplication.objects.get_or_create(user=request.user, application=app)
+    link.status = not link.status
+    link.save(update_fields=["status"])
+    return redirect("manager:app_conf")

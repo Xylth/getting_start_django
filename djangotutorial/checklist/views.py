@@ -103,6 +103,7 @@ def action_detail(request, action_id):
     form = ActionForm(instance=action)
     return render(request, "checklist/action_detail.html", {"form": form,"action": action})
 
+
 @login_required
 @require_POST
 def toggle_action(request, action_id):
@@ -110,7 +111,6 @@ def toggle_action(request, action_id):
     action.status = not action.status
     action.save()
     return redirect( "checklist:checklist_detail", checklist_id = action.checklist_id)
-
 @login_required
 @require_POST
 def up_action(request, action_id):

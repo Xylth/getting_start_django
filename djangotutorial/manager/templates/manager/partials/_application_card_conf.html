@@ -1,0 +1,18 @@
+<div class="flex items-center gap-4 bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition">
+
+    <form action="{% url 'manager:toggle_app' app.id %}" method="post">
+        {% csrf_token %}
+        {%include "checklist/partials/buttons/element_buttons/_toggle_app.html"%}
+    </form>
+        <div class="flex-1 min-w-0 self-stretch flex items-center">
+            <h2 class="text-lg font-semibold truncate
+                    {% if app.activate %}
+                        text-gray-400
+                    {% else %}
+                        text-gray-900
+                    {% endif %}">
+                {{ app.name }}
+            </h2>
+        </div>
+
+</div>

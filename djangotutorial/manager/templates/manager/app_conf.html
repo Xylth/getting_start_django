@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block goal %}
+    CONFIGURER
+{% endblock %}
+
+{% block target %}
+    Applications
+{% endblock %}
+
+{% block info %}
+    Choisir les applications que vous voulez utiliser
+{% endblock %}
+
+{% block content %}
+    <div class="space-y-3">
+        {% for app in apps %}
+            {% include 'manager/partials/_application_card_conf.html' %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block menu %}
+
+    <form method="get" action="{% url 'manager:homepage' %}">
+        {% include 'core/partials/buttons/menu_buttons/_validate.html' %}
+    </form>
+
+{% endblock %}
+
+

@@ -9,4 +9,6 @@ urlpatterns = [
     path("register/", views.register_user, name="register"),
     path("logout/", views.logout_user, name="logout"),
     path("profile/", views.profile, name="profile"),
+    path("app_conf/", views.app_conf, name="app_conf"),
+    path("toggle_app/<int:app_id>/", views.toggle_app , name="toggle_app"),
 ]

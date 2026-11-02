@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,11 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Checklists{% endblock %}</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="{% static 'core/js/toggle_pass_widget.js' %}" defer></script>
 </head>
 <body class="bg-gray-100 min-h-screen">
-    <div id="nav_bar">
-        <a href="{% url 'manager:logout' %}">Deconnexion</a>
-    </div>
+    {% block nav_bar %}{% include 'core/partials/_nav_bar.html' %}{% endblock %}
     <main class="max-w-2xl mx-auto p-6">
         <header class="mb-6">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">{% block goal %}{% endblock %}</p>
@@ -17,7 +18,9 @@
             <p class="text-sm text-gray-500 mt-1">{% block info %}{% endblock %}</p>
         </header>
 
-        {% block content %}{% endblock %}
+        {% block content %}
+
+        {% endblock %}
 
         <div class="w-full flex justify-evenly items-center my-6">
             {% block menu %}{% endblock %}

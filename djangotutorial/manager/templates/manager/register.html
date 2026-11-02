@@ -1,4 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
+
+{% block nav_bar %}
+{% endblock %}
 
 {% block goal %}
     INSCRIPTION
@@ -17,10 +20,11 @@
     <div class="space-y-3">
         <form method="post" id="content-form"
           class="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
-        {% csrf_token %}
-        {% for field in form %}
-            {% include 'partials/_form_field.html' %}
-        {% endfor %}
+            {% csrf_token %}
+            {% for field in form %}
+                {% include 'core/partials/_form_field.html' %}
+            {% endfor %}
+        </form>
     </div>
 
     <div class="w-full flex justify-evenly items-center my-6">
@@ -30,6 +34,10 @@
 
 {% block menu %}
 
-    {% include 'checklist/partials/buttons/menu_buttons/_validate.html' with form_id="content-form" %}
+    {% include 'core/partials/buttons/menu_buttons/_validate.html' with form_id="content-form" %}
+
+    <form method="get" action="{% url 'manager:login' %}">
+        {%include "core/partials/buttons/menu_buttons/_cancel.html"%}
+    </form>
 
 {% endblock %}

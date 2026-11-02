@@ -32,25 +32,32 @@ def checklist_detail(request,checklist_id):
 
 @login_required
 def new_checklist(request):
+    default_new_checklist = ChecklistForm()
     if request.method == "POST":
         form = ChecklistForm(request.POST)
+        form.instance.user = request.user
         if form.is_valid():
             checklist = form.save(commit=False)
             checklist.user = request.user
             checklist.save()
             return redirect( "checklist:checklist_detail", checklist_id = checklist.id )
+        else:
+            form.data = default_new_checklist.data.copy()
     else:
-        form = ChecklistForm()
+        form = default_new_checklist
     return render(request, "checklist/new_checklist.html",{"form": form},)
 
 @login_required
 def update_checklist(request,checklist_id):
     checklist = get_object_or_404(Checklist, pk=checklist_id, user=request.user)
+    initial = ChecklistForm(instance=checklist).initial
     if request.method == "POST":
         form = ChecklistForm(request.POST, instance=checklist)
         if form.is_valid():
             form.save()
             return redirect( "checklist:checklist_detail", checklist_id = checklist_id)
+        form.data = initial
+        checklist.refresh_from_db()
     else:
         form = ChecklistForm(instance=checklist)
     return render(request,"checklist/update_checklist.html",{"form": form, "checklist" : checklist})
@@ -77,16 +84,17 @@ def delete_checklist(request,checklist_id):
 @login_required
 def new_action(request, checklist_id):
     checklist = get_object_or_404(Checklist,pk=checklist_id, user=request.user)
-    action = Action(checklist = checklist)
     if request.method == "POST":
-        form = ActionForm(request.POST,instance=action)
+        form = ActionForm(request.POST)
+        form.instance.checklist = checklist
         if form.is_valid():
             action = form.save(commit=False)
             action.rank =Action.objects.filter(checklist = checklist).count()
             action.save()
             return redirect("checklist:checklist_detail", checklist_id=checklist_id)
+        form.data = {}
     else:
-        form = ActionForm(instance=action)
+        form = ActionForm()
     return render(request, "checklist/new_action.html", {"form": form,"checklist": checklist})
 
 @login_required
@@ -137,14 +145,18 @@ def delete_action(request, action_id):
     return redirect( "checklist:checklist_detail", checklist_id = action.checklist_id)
 
 @login_required
-def update_action(request,action_id):
-    action = get_object_or_404(Action, pk= action_id, checklist__user = request.user)
+def update_action(request, action_id):
+    action = get_object_or_404(Action, pk=action_id, checklist__user=request.user)
+    initial = ActionForm(instance=action).initial   # avant is_valid()
+
     if request.method == "POST":
         form = ActionForm(request.POST, instance=action)
         if form.is_valid():
-            action = form.save()
-            return redirect("checklist:checklist_detail", checklist_id = action.checklist.id)
+            form.save()
+            return redirect("checklist:checklist_detail", checklist_id=action.checklist_id)
+        form.data = initial
+        action.refresh_from_db()   # annule les modifs faites par is_valid()
     else:
         form = ActionForm(instance=action)
-    return render(request,"checklist/update_action.html",{"form" : form, "action":action},)
 
+    return render(request, "checklist/update_action.html", {"form": form, "action": action})

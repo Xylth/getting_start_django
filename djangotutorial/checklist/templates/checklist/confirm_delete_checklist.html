@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block header%}
      Supprimer la checklist {{checklist.name}}?
@@ -29,10 +29,10 @@
 {% block menu %}
     <form action="{% url 'checklist:delete_checklist' checklist.id %}" method="post">
     {% csrf_token %}
-        {%include "checklist/partials/buttons/menu_buttons/_validate.html"%}
+        {%include "core/partials/buttons/menu_buttons/_validate.html"%}
     </form>
 
     <form method="get" action="{% url 'checklist:checklist_detail' checklist.id %}">
-        {%include "checklist/partials/buttons/menu_buttons/_cancel.html"%}
+        {%include "core/partials/buttons/menu_buttons/_cancel.html"%}
     </form>
 {% endblock %}

@@ -1,0 +1,8 @@
+<div class="relative [&_input]:pr-12">
+    {% include "django/forms/widgets/input.html" %}
+    <button type="button" data-toggle-password
+            class="absolute inset-y-0 right-0 px-3 text-sm text-gray-500 hover:text-gray-800">
+        {% include "core/partials/icons/_"|add:"show"|add:".html" %}
+        {% include "core/partials/icons/_"|add:"hide"|add:".html" %}
+    </button>
+</div>

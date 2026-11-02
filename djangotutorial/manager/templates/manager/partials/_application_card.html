@@ -1,0 +1,23 @@
+{% with url_name=app.namespace|add:":index" icon_tpl="core/partials/icons/_"|add:app.icon|add:".html" %}
+<a href="{% url url_name %}"
+   class="flex items-center gap-4 bg-white rounded-2xl border border-gray-200 p-4 hover:shadow-md transition">
+
+    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+        {% include icon_tpl %}
+    </div>
+
+    <div class="flex-1 min-w-0">
+        <h2 class="text-lg font-semibold text-gray-900 truncate">{{ app.name }}</h2>
+        <div class="flex items-center gap-4 mt-2">
+            <span class="text-sm text-gray-500 whitespace-nowrap">
+                {{ app.comment }}
+            </span>
+        </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 shrink-0" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+    </svg>
+</a>
+{% endwith %}

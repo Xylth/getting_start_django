@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block goal %}
     VISUALISER
@@ -25,19 +25,19 @@
 
 {% block menu %}
     <form method="get" action="{% url 'checklist:new_action' checklist.id %}">
-        {%include "checklist/partials/buttons/menu_buttons/_add.html"%}
+        {%include "core/partials/buttons/menu_buttons/_add.html"%}
     </form>
 
     <form method="get" action="{% url 'checklist:confirm_delete_checklist' checklist.id %}">
-        {%include "checklist/partials/buttons/menu_buttons/_delete.html"%}
+        {%include "core/partials/buttons/menu_buttons/_delete.html"%}
     </form>
 
     <form method="get" action="{% url 'checklist:update_checklist' checklist.id %}">
-        {%include "checklist/partials/buttons/menu_buttons/_edit.html"%}
+        {%include "core/partials/buttons/menu_buttons/_edit.html"%}
     </form>
 
     <form method="get" action="{% url 'checklist:index' %}">
-        {%include "checklist/partials/buttons/menu_buttons/_back.html"%}
+        {%include "core/partials/buttons/menu_buttons/_back.html"%}
     </form>
 
 {% endblock %}

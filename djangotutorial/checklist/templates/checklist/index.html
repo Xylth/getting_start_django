@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'core/base.html' %}
 
 {% block goal %}
     VISUALISER
@@ -29,6 +29,6 @@
 
 {% block menu %}
     <form method="get" action="{% url 'checklist:new_checklist' %}">
-        {%include "checklist/partials/buttons/menu_buttons/_add.html"%}
+        {%include "core/partials/buttons/menu_buttons/_add.html"%}
     </form>
 {% endblock %}

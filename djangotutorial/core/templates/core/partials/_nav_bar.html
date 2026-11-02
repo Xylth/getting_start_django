@@ -1,0 +1,22 @@
+<nav id="nav_bar"
+        class="grid relative grid-cols-[2fr_3fr_2fr] items-center p-0 h-12
+                bg-gradient-to-b from-gray-300 from-60% to-gray-400 to-100%
+                shadow-md">
+        <div id="site_section" class="flex items-center gap-2 justify-self-start bg-red-900 w-full h-full"></div>
+        <div id="user_section" class="h-full text-center ">
+                <h1 class="inline-block text-4xl align-middle font-bold text-gray-900">
+                        {{ user.username }}
+                </h1>
+        </div>
+        <div id="control_section" class="grid grid-cols-3 border-x-1 divide-x-1 [&>*]:[border-image:linear-gradient(to_bottom,transparent_10%,var(--color-gray-400)_20%,var(--color-gray-400)_80%,transparent_90%)_1] [border-image:linear-gradient(to_bottom,transparent_10%,var(--color-gray-400)_20%,var(--color-gray-400)_80%,transparent_90%)_1] items-center justify-end w-full h-full ">
+                {% url 'manager:homepage' as homepage_url %}
+                {% url 'manager:profile' as profile_url %}
+                {% url 'manager:logout' as logout_url %}
+                {% include "core/partials/buttons/nav_buttons/_generic.html" with target=homepage_url value="Menu"%}
+                {% include "core/partials/buttons/nav_buttons/_generic.html" with target=profile_url value="Profil"%}
+                {% include "core/partials/buttons/nav_buttons/_generic.html" with target=logout_url value="Deconnexion"%}
+        </div>
+        <div id="middle_marker"
+                class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-black pointer-events-none hidden">
+        </div>
+</nav>
